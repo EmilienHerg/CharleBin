@@ -28,27 +28,43 @@ class Filter
      *
      * @access public
      * @static
-     * @param  string $time
+     * @param int $time
+     * @param string $unite
      * @throws Exception
      * @return string
      */
-    public static function formatHumanReadableTime($time)
-    {
-        if (preg_match('/^(\d+) *(\w+)$/', $time, $matches) !== 1) {
-            throw new Exception("Error parsing time format '$time'", 30);
+    public static function formatHumanReadableTime($time, $unite = 's') {
+        $time = (int) $time;
+        if ($time < 0) {
+            throw new Exception('Invalid time');
         }
-        switch ($matches[2]) {
-            case 'sec':
-                $unit = 'second';
-                break;
-            case 'min':
-                $unit = 'minute';
-                break;
-            default:
-                $unit = rtrim($matches[2], 's');
+        $unite = strtolower($unite);
+        if ($unite === 's') {
+            $unite = I18n::_('second');
+        } elseif ($unite === 'm') {
+            $unite = I18n::_('minute');
+        } elseif ($unite === 'h') {
+            $unite = I18n::_('hour');
+        } elseif ($unite === 'd') {
+            $unite = I18n::_('day');
+        } elseif ($unite === 'w') {
+            $unite = I18n::_('week');
+        } elseif ($unite === 'm') {
+            $unite = I18n::_('month');
+        } elseif ($unite === 'y') {
+            $unite = I18n::_('year');
+        } else {
+            throw new Exception('Invalid time unit');
         }
-        return I18n::_(array('%d ' . $unit, '%d ' . $unit . 's'), (int) $matches[1]);
+        if ($time === 0) {
+            return I18n::_('never');
+        } elseif ($time === 1) {
+            return I18n::_('%d ' . $unite, $time);
+        } else {
+            return I18n::_('%d ' . $unite . 's', $time);
+        }
     }
+    
 
     /**
      * format a given number of bytes in IEC 80000-13:2008 notation (localized)

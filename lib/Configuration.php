@@ -50,7 +50,7 @@ class Configuration
             'info'                     => 'More information on the <a href=\'https://privatebin.info/\'>project page</a>.',
             'notice'                   => '',
             'languageselection'        => false,
-            'fr'                       => '',
+            'languagedefault'          => 'fr',
             'urlshortener'             => '',
             'qrcode'                   => true,
             'icon'                     => 'identicon',
@@ -223,7 +223,8 @@ class Configuration
 
         // support for old config file format, before the fork was renamed and PSR-4 introduced
         $this->_configuration['model']['class'] = str_replace(
-            'zerobin_', 'privatebin_',
+            'zerobin_',
+            'privatebin_',
             $this->_configuration['model']['class']
         );
 

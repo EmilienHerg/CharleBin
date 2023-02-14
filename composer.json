@@ -41,5 +41,10 @@
 	},
 	"config" : {
 		"autoloader-suffix" : "DontChange"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "3.*",
+		"phpmd/phpmd": "@stable",
+		"friendsofphp/php-cs-fixer": "^3.14"
 	}
 }
